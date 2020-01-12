@@ -2,20 +2,19 @@ package pl.piomin.service.kubemq.listener;
 
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import io.kubemq.sdk.queue.Queue;
-import io.kubemq.sdk.queue.ReceiveMessagesResponse;
 import io.kubemq.sdk.queue.Transaction;
 import io.kubemq.sdk.queue.TransactionMessagesResponse;
 import io.kubemq.sdk.tools.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pl.piomin.service.kubemq.OrderController;
+import pl.piomin.service.kubemq.controller.OrderController;
 import pl.piomin.service.kubemq.model.Order;
 import pl.piomin.service.kubemq.model.OrderStatus;
 import pl.piomin.service.kubemq.service.OrderProcessor;
 
 import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLException;
+
 import java.io.IOException;
 
 @Component

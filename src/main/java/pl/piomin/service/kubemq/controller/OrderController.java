@@ -1,10 +1,9 @@
-package pl.piomin.service.kubemq;
+package pl.piomin.service.kubemq.controller;
 
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import io.kubemq.sdk.queue.Message;
 import io.kubemq.sdk.queue.Queue;
 import io.kubemq.sdk.queue.SendMessageResult;
-import io.kubemq.sdk.queue.Transaction;
 import io.kubemq.sdk.tools.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

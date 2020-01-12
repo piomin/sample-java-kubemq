@@ -1,1 +1,2 @@
 spring.application.name: sampleapp-kubemq
+kubemq.address: kubemq-cluster-grpc:50000

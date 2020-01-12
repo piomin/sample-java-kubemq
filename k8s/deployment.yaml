@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sampleapp-kubemq
+  namespace: kubemq
   labels:
     app: sampleapp-kubemq
 spec:
@@ -24,6 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sampleapp-kubemq
+  namespace: kubemq
   labels:
     app: sampleapp-kubemq
 spec:
