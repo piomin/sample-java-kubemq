@@ -43,5 +43,6 @@ public class AccountRepository {
     public void init() {
         add(new Account(null, "123456", 2000));
         add(new Account(null, "123457", 2000));
+        add(new Account(null, "123458", 2000));
     }
 }

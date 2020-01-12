@@ -1,6 +1,7 @@
 package pl.piomin.service.kubemq.config;
 
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
+import io.kubemq.sdk.event.Channel;
 import io.kubemq.sdk.event.Subscriber;
 import io.kubemq.sdk.queue.Queue;
 
@@ -24,6 +25,11 @@ public class KubeMQConfiguration {
     @Bean
     public Subscriber subscriber() {
         return new Subscriber(address);
+    }
+
+    @Bean
+    public Channel channel() {
+        return new Channel("transactions", "orders", false, address);
     }
 
     String getAddress() {

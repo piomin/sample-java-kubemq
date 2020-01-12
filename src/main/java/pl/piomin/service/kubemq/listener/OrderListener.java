@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
+import io.kubemq.sdk.event.Channel;
+import io.kubemq.sdk.event.Event;
 import io.kubemq.sdk.queue.Queue;
 import io.kubemq.sdk.queue.Transaction;
 import io.kubemq.sdk.queue.TransactionMessagesResponse;
@@ -25,11 +27,13 @@ public class OrderListener {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
 	private Queue queue;
+	private Channel channel;
 	private OrderProcessor orderProcessor;
 	private TaskExecutor taskExecutor;
 
-	public OrderListener(Queue queue, OrderProcessor orderProcessor, TaskExecutor taskExecutor) {
+	public OrderListener(Queue queue, Channel channel, OrderProcessor orderProcessor, TaskExecutor taskExecutor) {
 		this.queue = queue;
+		this.channel = channel;
 		this.orderProcessor = orderProcessor;
 		this.taskExecutor = taskExecutor;
 	}
@@ -42,12 +46,15 @@ public class OrderListener {
                     Transaction transaction = queue.CreateTransaction();
                     TransactionMessagesResponse response = transaction.Receive(10, 10);
                     if (response.getMessage().getBody().length > 0) {
-                        LOGGER.info("Received");
                         Order order = orderProcessor
                                 .process((Order) Converter.FromByteArray(response.getMessage().getBody()));
-                        LOGGER.info("Order received: {}", order);
+                        LOGGER.info("Order processed: {}", order);
                         if (order.getStatus().equals(OrderStatus.CONFIRMED)) {
                             transaction.AckMessage();
+                            Event event = new Event();
+                            event.setEventId(response.getMessage().getMessageID());
+                            event.setBody(Converter.ToByteArray(order));
+                            channel.SendEvent(event);
                         } else {
                             transaction.RejectMessage();
                         }
