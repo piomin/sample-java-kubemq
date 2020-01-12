@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
 @ToString
-public class Order {
+public class Order implements Serializable {
 
     private OrderType type;
     private Integer accountIdFrom;

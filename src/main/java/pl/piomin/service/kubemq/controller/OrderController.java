@@ -31,11 +31,14 @@ public class OrderController {
     @PostMapping
     public Order sendOrder(@RequestBody Order order) {
         try {
+            LOGGER.info("Order sent: {}", order);
             final SendMessageResult result = queue.SendQueueMessage(new Message()
                     .setBody(Converter.ToByteArray(order)));
             order.setId(result.getMessageID());
             order.setStatus(OrderStatus.IN_PROGRESS);
+            LOGGER.info("Order finished: {}", order);
         } catch (ServerAddressNotSuppliedException | IOException e) {
+            LOGGER.error("Error sending", e);
             order.setStatus(OrderStatus.ERROR);
         }
         return order;

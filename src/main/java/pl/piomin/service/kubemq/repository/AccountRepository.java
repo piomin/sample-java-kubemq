@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
 @Repository
 public class AccountRepository {
 
@@ -37,4 +39,9 @@ public class AccountRepository {
         return accounts;
     }
 
+    @PostConstruct
+    public void init() {
+        add(new Account(null, "123456", 2000));
+        add(new Account(null, "123457", 2000));
+    }
 }

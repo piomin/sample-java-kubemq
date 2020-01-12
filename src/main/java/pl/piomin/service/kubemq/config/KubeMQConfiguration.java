@@ -18,12 +18,12 @@ public class KubeMQConfiguration {
 
     @Bean
     public Queue queue() throws ServerAddressNotSuppliedException, SSLException {
-        return new Queue("transactions", "orders", "kubemq-cluster-grpc:50000");
+        return new Queue("transactions", "orders", address);
     }
 
     @Bean
     public Subscriber subscriber() {
-        return new Subscriber("kubemq-cluster-grpc:50000");
+        return new Subscriber(address);
     }
 
     String getAddress() {
