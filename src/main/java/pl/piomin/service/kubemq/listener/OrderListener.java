@@ -1,19 +1,16 @@
 package pl.piomin.service.kubemq.listener;
 
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 
-import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import io.kubemq.sdk.event.Channel;
 import io.kubemq.sdk.event.Event;
+import io.kubemq.sdk.event.Result;
 import io.kubemq.sdk.queue.Queue;
 import io.kubemq.sdk.queue.Transaction;
 import io.kubemq.sdk.queue.TransactionMessagesResponse;
 import io.kubemq.sdk.tools.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.piomin.service.kubemq.controller.OrderController;
 import pl.piomin.service.kubemq.model.Order;
 import pl.piomin.service.kubemq.model.OrderStatus;
 import pl.piomin.service.kubemq.service.OrderProcessor;
@@ -24,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderListener {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderListener.class);
 
 	private Queue queue;
 	private Channel channel;
@@ -54,12 +51,12 @@ public class OrderListener {
                             Event event = new Event();
                             event.setEventId(response.getMessage().getMessageID());
                             event.setBody(Converter.ToByteArray(order));
-                            channel.SendEvent(event);
+                            Result result = channel.SendEvent(event);
+                            LOGGER.info("Event sent: {}", result.getEventId());
                         } else {
                             transaction.RejectMessage();
                         }
-                    }
-                    else {
+                    } else {
                         LOGGER.info("No messages");
                     }
                     Thread.sleep(10000);

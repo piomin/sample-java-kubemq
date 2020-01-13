@@ -29,7 +29,7 @@ public class KubeMQConfiguration {
 
     @Bean
     public Channel channel() {
-        return new Channel("transactions", "orders", false, address);
+        return new Channel("transactions", "orders", true, address);
     }
 
     String getAddress() {

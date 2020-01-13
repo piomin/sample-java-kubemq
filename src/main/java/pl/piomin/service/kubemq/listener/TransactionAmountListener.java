@@ -1,5 +1,10 @@
 package pl.piomin.service.kubemq.listener;
 
+import java.io.IOException;
+
+import javax.annotation.PostConstruct;
+import javax.net.ssl.SSLException;
+
 import io.grpc.stub.StreamObserver;
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import io.kubemq.sdk.event.EventReceive;
@@ -10,14 +15,12 @@ import io.kubemq.sdk.subscription.SubscribeType;
 import io.kubemq.sdk.tools.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import pl.piomin.service.kubemq.exception.InsufficientFundsException;
 import pl.piomin.service.kubemq.model.Order;
 import pl.piomin.service.kubemq.repository.AccountRepository;
 
-import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLException;
-import java.io.IOException;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionAmountListener implements StreamObserver<EventReceive> {
@@ -56,8 +59,8 @@ public class TransactionAmountListener implements StreamObserver<EventReceive> {
     @PostConstruct
     public void init() {
         SubscribeRequest subscribeRequest = new SubscribeRequest();
-        subscribeRequest.setChannel("orders");
-        subscribeRequest.setClientID(getClass().getName());
+        subscribeRequest.setChannel("transactions");
+        subscribeRequest.setClientID("amount-listener");
         subscribeRequest.setSubscribeType(SubscribeType.EventsStore);
         subscribeRequest.setEventsStoreType(EventsStoreType.StartNewOnly);
         try {
