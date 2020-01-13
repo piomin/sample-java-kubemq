@@ -45,14 +45,14 @@ public class OrderListener {
                     if (response.getMessage().getBody().length > 0) {
                         Order order = orderProcessor
                                 .process((Order) Converter.FromByteArray(response.getMessage().getBody()));
-                        LOGGER.info("Order processed: {}", order);
+                        LOGGER.info("Processed: {}", order);
                         if (order.getStatus().equals(OrderStatus.CONFIRMED)) {
                             transaction.AckMessage();
                             Event event = new Event();
                             event.setEventId(response.getMessage().getMessageID());
                             event.setBody(Converter.ToByteArray(order));
-                            Result result = channel.SendEvent(event);
-                            LOGGER.info("Event sent: {}", result.getEventId());
+							LOGGER.info("Sending event: id={}", event.getEventId());
+                            channel.SendEvent(event);
                         } else {
                             transaction.RejectMessage();
                         }
@@ -61,7 +61,7 @@ public class OrderListener {
                     }
                     Thread.sleep(10000);
                 } catch (Exception e) {
-
+					LOGGER.error("Error", e);
                 }
 			}
 		});

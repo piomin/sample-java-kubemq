@@ -39,10 +39,10 @@ public class TransactionAmountListener implements StreamObserver<EventReceive> {
     public void onNext(EventReceive eventReceive) {
         try {
             Order order = (Order) Converter.FromByteArray(eventReceive.getBody());
-            LOGGER.info("Event: {}", order);
+            LOGGER.info("Amount event: {}", order);
             accountRepository.updateBalance(order.getAccountIdTo(), (int) (order.getAmount() * 0.1));
         } catch (IOException | ClassNotFoundException | InsufficientFundsException e) {
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
     }
 

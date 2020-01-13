@@ -1,2 +1,4 @@
 spring.application.name: sampleapp-kubemq
 kubemq.address: kubemq-cluster-grpc:50000
+
+logging.pattern.console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(---){faint} %clr([%15.15t]){yellow} %clr(:){red} %clr(%m){faint}%n"

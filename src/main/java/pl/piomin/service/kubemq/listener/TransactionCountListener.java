@@ -41,7 +41,7 @@ public class TransactionCountListener implements StreamObserver<EventReceive> {
     public void onNext(EventReceive eventReceive) {
         try {
             Order order = (Order) Converter.FromByteArray(eventReceive.getBody());
-            LOGGER.info("Event: {}", order);
+            LOGGER.info("Count event: {}", order);
             Integer accountIdTo = order.getAccountIdTo();
             Integer noOfTransactions = transactionsCount.get(accountIdTo);
             if (noOfTransactions == null)
@@ -54,7 +54,7 @@ public class TransactionCountListener implements StreamObserver<EventReceive> {
                 }
             }
         } catch (IOException | ClassNotFoundException | InsufficientFundsException e) {
-            e.printStackTrace();
+            LOGGER.error("Error", e);
         }
     }
 
