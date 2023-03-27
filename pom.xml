@@ -34,7 +34,7 @@
         <dependency>
             <groupId>io.kubemq.sdk</groupId>
             <artifactId>kubemq-sdk-Java</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
