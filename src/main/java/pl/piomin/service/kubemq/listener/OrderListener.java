@@ -1,22 +1,19 @@
 package pl.piomin.service.kubemq.listener;
 
-import javax.annotation.PostConstruct;
-
 import io.kubemq.sdk.event.Channel;
 import io.kubemq.sdk.event.Event;
-import io.kubemq.sdk.event.Result;
 import io.kubemq.sdk.queue.Queue;
 import io.kubemq.sdk.queue.Transaction;
 import io.kubemq.sdk.queue.TransactionMessagesResponse;
 import io.kubemq.sdk.tools.Converter;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Component;
 import pl.piomin.service.kubemq.model.Order;
 import pl.piomin.service.kubemq.model.OrderStatus;
 import pl.piomin.service.kubemq.service.OrderProcessor;
-
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Component;
 
 @Component
 public class OrderListener {

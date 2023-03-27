@@ -1,5 +1,6 @@
 package pl.piomin.service.kubemq.repository;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 import pl.piomin.service.kubemq.exception.InsufficientFundsException;
 import pl.piomin.service.kubemq.model.Account;
@@ -7,8 +8,6 @@ import pl.piomin.service.kubemq.model.Account;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.annotation.PostConstruct;
 
 @Repository
 public class AccountRepository {
