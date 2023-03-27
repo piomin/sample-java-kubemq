@@ -1,10 +1,5 @@
 package pl.piomin.service.kubemq.listener;
 
-import java.io.IOException;
-
-import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLException;
-
 import io.grpc.stub.StreamObserver;
 import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import io.kubemq.sdk.event.EventReceive;
@@ -13,14 +8,16 @@ import io.kubemq.sdk.subscription.EventsStoreType;
 import io.kubemq.sdk.subscription.SubscribeRequest;
 import io.kubemq.sdk.subscription.SubscribeType;
 import io.kubemq.sdk.tools.Converter;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import pl.piomin.service.kubemq.exception.InsufficientFundsException;
 import pl.piomin.service.kubemq.model.Order;
 import pl.piomin.service.kubemq.repository.AccountRepository;
 
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Component;
+import javax.net.ssl.SSLException;
+import java.io.IOException;
 
 @Component
 public class TransactionAmountListener implements StreamObserver<EventReceive> {
